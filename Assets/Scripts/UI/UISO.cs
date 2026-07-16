@@ -1,0 +1,11 @@
+using UnityEngine;
+
+namespace PSEMO.UI
+{
+    [CreateAssetMenu(fileName = "UIData", menuName = "SO/UI")]
+    public class UISO : ScriptableObject
+    {
+        public float returningFromPauseCooldown = 1.0f;
+        public float extraDelayForLoading = 0.1f;
+    }
+}
