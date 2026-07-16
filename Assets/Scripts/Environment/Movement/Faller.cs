@@ -3,7 +3,7 @@ using PSEMO.Environment.Functionality;
 
 namespace PSEMO.Environment.Movement
 {
-    [RequireComponent(typeof(Rigidbody2D))]
+    [RequireComponent(typeof(Rigidbody))]
     public class Faller : MonoBehaviour, IMover, IPoolable
     {
         [SerializeField] private float maxSpeed = 20f;
@@ -12,11 +12,11 @@ namespace PSEMO.Environment.Movement
         private float currentSpeed = 0f;
         private Vector3 directionalSpeed = Vector3.zero;
 
-        private Rigidbody2D rb;
+        private Rigidbody rb;
 
         void Awake()
         {
-            rb = GetComponent<Rigidbody2D>();
+            rb = GetComponent<Rigidbody>();
         }
 
         void FixedUpdate()
@@ -33,7 +33,7 @@ namespace PSEMO.Environment.Movement
             rb.linearVelocity = directionalSpeed;
         }
 
-        public Vector2 GetVelocity()
+        public Vector3 GetVelocity()
         {
             return directionalSpeed;
         }
@@ -42,7 +42,7 @@ namespace PSEMO.Environment.Movement
         {
             currentSpeed = 0f;
             directionalSpeed = Vector3.zero;
-            rb.linearVelocity = Vector2.zero;
+            rb.linearVelocity = Vector3.zero;
         }
     }
 }

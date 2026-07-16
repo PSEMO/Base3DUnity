@@ -2,26 +2,26 @@ using UnityEngine;
 
 namespace PSEMO.Environment.Functionality.Enabler
 {
-    [RequireComponent(typeof(BoxCollider2D))]
+    [RequireComponent(typeof(BoxCollider))]
     public class EnableWhileContact : MonoBehaviour
     {
         [Header("Object to enable")]
         [SerializeField] private GameObject objectToEnable;
 
-        void OnTriggerEnter2D(Collider2D _)
+        void OnTriggerEnter(Collider _)
         {
             HandleEnter();
         }
-        void OnCollisionEnter2D(Collision2D _)
+        void OnCollisionEnter(Collision _)
         {
             HandleEnter();
         }
 
-        void OnTriggerExit2D(Collider2D _)
+        void OnTriggerExit(Collider _)
         {
             HandleExit();
         }
-        void OnCollisionExit2D(Collision2D _)
+        void OnCollisionExit(Collision _)
         {
             HandleExit();
         }

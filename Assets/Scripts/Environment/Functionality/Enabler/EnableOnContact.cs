@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace PSEMO.Environment.Functionality.Enabler
 {
-    [RequireComponent(typeof(BoxCollider2D))]
+    [RequireComponent(typeof(BoxCollider))]
     public class EnableOnContact : MonoBehaviour
     {
         [Header("Object to enable")]
@@ -14,12 +14,11 @@ namespace PSEMO.Environment.Functionality.Enabler
 
         private Coroutine EnablingRoutine = null;
 
-        void OnTriggerEnter2D(Collider2D _)
+        void OnTriggerEnter(Collider _)
         {
             HandleEnter();
         }
-
-        void OnCollisionEnter2D(Collision2D _)
+        void OnCollisionEnter(Collision _)
         {
             HandleEnter();
         }

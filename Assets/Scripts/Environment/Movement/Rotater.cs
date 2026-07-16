@@ -12,11 +12,11 @@ namespace PSEMO.Environment.Movement
         [SerializeField] private bool useGlobalTime = false;
 
         private Quaternion initialRotation;
-        private Rigidbody2D rb;
+        private Rigidbody rb;
 
         void Awake()
         {
-            rb = GetComponent<Rigidbody2D>();
+            rb = GetComponent<Rigidbody>();
             initialRotation = transform.rotation;
         }
 
@@ -54,12 +54,12 @@ namespace PSEMO.Environment.Movement
             if (useGlobalTime)
             {
                 float time = unscaledTime ? Time.unscaledTime : Time.time;
-                rb.MoveRotation(initialRotation.eulerAngles.z + (rotationSpeed * time * rotationAxis.z));
+                rb.MoveRotation(initialRotation * Quaternion.AngleAxis(rotationSpeed * time, rotationAxis));
             }
             else
             {
                 float dt = unscaledTime ? Time.fixedUnscaledDeltaTime : Time.fixedDeltaTime;
-                rb.MoveRotation(rb.rotation + (rotationSpeed * dt * rotationAxis.z));
+                rb.MoveRotation(rb.rotation * Quaternion.AngleAxis(rotationSpeed * dt, rotationAxis));
             }
         }
 
@@ -68,8 +68,8 @@ namespace PSEMO.Environment.Movement
             transform.rotation = initialRotation;
             if (rb != null)
             {
-                rb.rotation = initialRotation.eulerAngles.z;
-                rb.angularVelocity = 0f;
+                rb.rotation = initialRotation;
+                rb.angularVelocity = Vector3.zero;
             }
         }
 
@@ -83,7 +83,7 @@ namespace PSEMO.Environment.Movement
             transform.rotation = data.rotation;
             if (rb != null)
             {
-                rb.rotation = data.rotation.eulerAngles.z;
+                rb.rotation = data.rotation;
             }
         }
 

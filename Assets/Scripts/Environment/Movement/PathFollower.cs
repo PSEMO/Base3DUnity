@@ -5,7 +5,7 @@ using PSEMO.Core.Persistence;
 
 namespace PSEMO.Environment.Movement
 {
-    [RequireComponent(typeof(Rigidbody2D))]
+    [RequireComponent(typeof(Rigidbody))]
     public class PathFollower : MonoBehaviour, IMover, IPoolable, IPersistable
     {
         [SerializeField] private float speed = 5f;
@@ -19,13 +19,13 @@ namespace PSEMO.Environment.Movement
         private Vector3 directionalSpeed = Vector3.zero;
         [HideInInspector] public Vector3 targetPos = Vector3.zero;
 
-        private Rigidbody2D rb;
+        private Rigidbody rb;
 
         Vector3 initialPosition;
 
         void Awake()
         {
-            rb = GetComponent<Rigidbody2D>();
+            rb = GetComponent<Rigidbody>();
             initialPosition = transform.position;
         }
 
@@ -56,7 +56,7 @@ namespace PSEMO.Environment.Movement
             rb.linearVelocity = directionalSpeed;
         }
 
-        public Vector2 GetVelocity()
+        public Vector3 GetVelocity()
         {
             return directionalSpeed;
         }
@@ -64,7 +64,7 @@ namespace PSEMO.Environment.Movement
         public void ResetObject()
         {
             directionalSpeed = Vector3.zero;
-            rb.linearVelocity = Vector2.zero;
+            rb.linearVelocity = Vector3.zero;
             currentWaypointIndex = 0;
             targetPos = targetPositions[0];
             transform.position = initialPosition;

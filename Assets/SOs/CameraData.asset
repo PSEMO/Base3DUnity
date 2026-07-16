@@ -12,8 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3e414e92f15b053ab8b3637ba520fe37, type: 3}
   m_Name: CameraData
   m_EditorClassIdentifier: Assembly-CSharp::CameraSO
+  offset: {x: 0, y: 3, z: -5}
+  rotationOffset: {x: 20, y: 0, z: 0}
   smoothTime: 0.25
   maxSpeed: Infinity
   useBounds: 0
-  minBounds: {x: 0, y: 0}
-  maxBounds: {x: 0, y: 0}
+  minBounds: {x: 0, y: 0, z: 0}
+  maxBounds: {x: 0, y: 0, z: 0}

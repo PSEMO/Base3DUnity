@@ -15,27 +15,27 @@ namespace PSEMO.Environment.Movement
             mover = _mover.GetComponent<IMover>();
         }
 
-        private void OnCollisionEnter2D(Collision2D col)
+        private void OnCollisionEnter(Collision col)
         {
             HandleEnter(col.collider);
         }
 
-        private void OnTriggerEnter2D(Collider2D col)
+        private void OnTriggerEnter(Collider col)
         {
             HandleEnter(col);
         }
 
-        private void OnCollisionExit2D(Collision2D col)
+        private void OnCollisionExit(Collision col)
         {
             HandleExit(col.collider);
         }
 
-        private void OnTriggerExit2D(Collider2D col)
+        private void OnTriggerExit(Collider col)
         {
             HandleExit(col);
         }
 
-        private void HandleEnter(Collider2D col)
+        private void HandleEnter(Collider col)
         {
             if (col.TryGetComponent(out IVelocityOffsettable offsettable))
             {
@@ -47,7 +47,7 @@ namespace PSEMO.Environment.Movement
             }
         }
 
-        private void HandleExit(Collider2D col)
+        private void HandleExit(Collider col)
         {
             if (col.TryGetComponent(out IVelocityOffsettable offsettable))
             {

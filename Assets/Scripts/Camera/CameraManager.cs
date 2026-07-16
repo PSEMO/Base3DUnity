@@ -33,6 +33,7 @@ namespace PSEMO.Camera
         void LateUpdate()
         {
             MoveTowardsTheTarget(GetTargetPos());
+            transform.rotation = Quaternion.Euler(data.rotationOffset);
         }
 
         private void MoveTowardsTheTarget(Vector3 targetPos)
@@ -43,6 +44,7 @@ namespace PSEMO.Camera
             {
                 nextPos.x = Mathf.Clamp(nextPos.x, data.minBounds.x, data.maxBounds.x);
                 nextPos.y = Mathf.Clamp(nextPos.y, data.minBounds.y, data.maxBounds.y);
+                nextPos.z = Mathf.Clamp(nextPos.z, data.minBounds.z, data.maxBounds.z);
             }
 
             transform.position = nextPos;
@@ -52,20 +54,20 @@ namespace PSEMO.Camera
         {
             if (targets.Count > 0)
             {
-                Vector2 endPosition = Vector2.zero;
+                Vector3 endPosition = Vector3.zero;
                 float totalWeight = 0f;
 
                 foreach (Transform target in targets.Keys)
                 {
                     float weight = targets[target];
-                    endPosition += (Vector2)target.position * weight;
+                    endPosition += target.position * weight;
                     totalWeight += weight;
                 }
 
                 endPosition /= totalWeight;
                 endPosition += data.offset;
 
-                return new Vector3 (endPosition.x, endPosition.y, transform.position.z);
+                return new Vector3 (endPosition.x, endPosition.y, endPosition.z);
             }
 
             return transform.position;

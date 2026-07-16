@@ -2,18 +2,18 @@ using UnityEngine;
 
 namespace PSEMO.GizmosAsAComp
 {
-    [RequireComponent(typeof(BoxCollider2D))]
+    [RequireComponent(typeof(BoxCollider))]
     public class BoxGizmos : MonoBehaviour
     {
 #if UNITY_EDITOR
         [SerializeField] private Color boxColor = new(0, 0, 0, 0.3f);
 
-        BoxCollider2D boxCollider;
+        BoxCollider boxCollider;
 
         private void OnDrawGizmos()
         {
             if (boxCollider == null)
-                boxCollider = GetComponent<BoxCollider2D>();
+                boxCollider = GetComponent<BoxCollider>();
             
             if (boxCollider != null)
             {
@@ -22,9 +22,9 @@ namespace PSEMO.GizmosAsAComp
 
                 Gizmos.color = boxColor;
                 Gizmos.matrix = Matrix4x4.TRS(transform.position, transform.rotation, transform.lossyScale);
-                Gizmos.DrawCube(boxCollider.offset, boxCollider.size);
+                Gizmos.DrawCube(boxCollider.center, boxCollider.size);
                 Gizmos.color = Color.red;
-                Gizmos.DrawWireCube(boxCollider.offset, boxCollider.size);
+                Gizmos.DrawWireCube(boxCollider.center, boxCollider.size);
 
                 Gizmos.matrix = oldMatrix;
                 Gizmos.color = oldColor;

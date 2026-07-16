@@ -8,6 +8,7 @@ namespace PSEMO.Player
     {
         private readonly PlayerController player;
         private readonly InputSystem_Actions inputActions;
+        private readonly Collider[] interactionHits = new Collider[10];
 
         public PlayerInputHandler(PlayerController player)
         {
@@ -51,11 +52,15 @@ namespace PSEMO.Player
         {
             if (context.performed && player.ableToInteract)
             {
-                Collider2D hit = Physics2D.OverlapCircle(player.transform.position, player.data.interactionRadius, player.data.interactionLayer);
+                int hitCount = Physics.OverlapSphereNonAlloc(player.transform.position, player.data.interactionRadius, interactionHits, player.data.interactionLayer);
 
-                if (hit != null && hit.TryGetComponent(out IInteractable interactable))
+                for (int i = 0; i < hitCount; i++)
                 {
-                    interactable.OnInteracted();
+                    if (interactionHits[i].TryGetComponent(out IInteractable interactable))
+                    {
+                        interactable.OnInteracted();
+                        break;
+                    }
                 }
             }
         }

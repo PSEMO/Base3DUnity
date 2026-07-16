@@ -3,22 +3,22 @@ using UnityEngine;
 
 namespace PSEMO.Environment.Movement
 {
-    [RequireComponent(typeof(Rigidbody2D))]
+    [RequireComponent(typeof(Rigidbody))]
     public class VelocityOffsetReceiver : MonoBehaviour, IVelocityOffsettable
     {
-        private Rigidbody2D rb;
+        private Rigidbody rb;
         private List<IMover> additionalVelocities = new();
 
         private void Awake()
         {
-            rb = GetComponent<Rigidbody2D>();
+            rb = GetComponent<Rigidbody>();
         }
 
         private void FixedUpdate()
         {
             if (additionalVelocities.Count > 0)
             {
-                Vector2 totalExtraVelocity = Vector2.zero;
+                Vector3 totalExtraVelocity = Vector3.zero;
                 foreach (IMover vel in additionalVelocities)
                 {
                     totalExtraVelocity += vel.GetVelocity();

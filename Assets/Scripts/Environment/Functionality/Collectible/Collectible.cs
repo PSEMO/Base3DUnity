@@ -12,11 +12,11 @@ namespace PSEMO.Environment.Functionality.Collectible
 
         [HideInInspector] public bool isCollected = false;
 
-        void OnTriggerEnter2D(Collider2D _)
+        void OnTriggerEnter(Collider _)
         {
             HandleContact();
         }
-        void OnCollisionEnter2D(Collision2D _)
+        void OnCollisionEnter(Collision _)
         {
             HandleContact();
         }

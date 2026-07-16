@@ -4,6 +4,6 @@ namespace PSEMO.Environment.Movement
 {
     public interface IMover
     {
-        public virtual Vector2 GetVelocity() => Vector2.zero;
+        public virtual Vector3 GetVelocity() => Vector3.zero;
     }
 }

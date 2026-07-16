@@ -4,7 +4,7 @@ using PSEMO.Core.Persistence;
 
 namespace PSEMO.Environment.Functionality.Enabler
 {
-    [RequireComponent(typeof(Collider2D))]
+    [RequireComponent(typeof(Collider))]
     public class EnableAbilityOnContact : MonoBehaviour, IPersistable
     {
         [Header("Ability Configuration")]
@@ -12,17 +12,16 @@ namespace PSEMO.Environment.Functionality.Enabler
 
         [HideInInspector] public bool isCollected = false;
 
-        void OnTriggerEnter2D(Collider2D col)
+        void OnTriggerEnter(Collider col)
         {
             OnContact(col);
         }
-
-        void OnCollisionEnter2D(Collision2D col)
+        void OnCollisionEnter(Collision col)
         {
             OnContact(col.collider);
         }
 
-        void OnContact(Collider2D col)
+        void OnContact(Collider col)
         {
             if (col.TryGetComponent(out PlayerController playerController))
             {
