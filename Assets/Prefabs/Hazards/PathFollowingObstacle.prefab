@@ -224,7 +224,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 69a26a224d30697b99cad7d4faa56dba, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PSEMO.Environment.Movement.RotateTowardsDirection
-  rotationSpeed: 20
+  rotationSpeed: 5
   minVelocityThreshold: 0.01
   angleOffset: {x: 0, y: 0, z: 0}
 --- !u!114 &1516034689188158805
