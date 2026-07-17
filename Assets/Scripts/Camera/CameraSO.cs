@@ -7,6 +7,7 @@ namespace PSEMO.Camera
     {
         [Header("Follow Settings")]
         public Vector3 offset = Vector3.zero;
+        public float distanceToTarget = 0;
         public Vector3 rotationOffset = Vector3.zero;
         public float smoothTime = 0.25f;
         public float maxSpeed = Mathf.Infinity;

@@ -11,6 +11,9 @@ namespace PSEMO.Camera
 
         private Dictionary<Transform, float> targets;
         private Vector3 velocity = Vector3.zero;
+        private Vector3 angularVelocity = Vector3.zero;
+        private Vector3 targetPos = Vector3.zero;
+        private Vector3 direction = Vector3.back;
         
         private void Awake()
         {
@@ -33,22 +36,42 @@ namespace PSEMO.Camera
 
         void LateUpdate()
         {
-            MoveTowardsTheTarget(GetTargetPos());
-            transform.rotation = Quaternion.Euler(data.rotationOffset);
+            Vector3 lastTargetPosition = targetPos;
+            targetPos = GetTargetPos();
+
+            Vector3 tempDirection = targetPos - lastTargetPosition;
+            tempDirection.y = 0;
+            direction = tempDirection.sqrMagnitude < 0.001f ? direction : tempDirection.normalized;
+
+            Vector3 offsettedPos = targetPos + data.offset + (-direction * data.distanceToTarget);
+
+            Quaternion targetRotation = Quaternion.LookRotation(direction);
+            Quaternion offsettedRotation = targetRotation * Quaternion.Euler(data.rotationOffset);
+
+            MoveAndRotateTowardsTheTarget(offsettedPos, offsettedRotation);
         }
 
-        private void MoveTowardsTheTarget(Vector3 targetPos)
+        private void MoveAndRotateTowardsTheTarget(Vector3 targetPos, Quaternion direction)
         {
-            Vector3 nextPos = Vector3.SmoothDamp(transform.position, targetPos, ref velocity, data.smoothTime, data.maxSpeed);
+            Vector3 newPos = Vector3.SmoothDamp(transform.position, targetPos, ref velocity, data.smoothTime, data.maxSpeed);
 
             if (data.useBounds)
             {
-                nextPos.x = Mathf.Clamp(nextPos.x, data.minBounds.x, data.maxBounds.x);
-                nextPos.y = Mathf.Clamp(nextPos.y, data.minBounds.y, data.maxBounds.y);
-                nextPos.z = Mathf.Clamp(nextPos.z, data.minBounds.z, data.maxBounds.z);
+                newPos.x = Mathf.Clamp(newPos.x, data.minBounds.x, data.maxBounds.x);
+                newPos.y = Mathf.Clamp(newPos.y, data.minBounds.y, data.maxBounds.y);
+                newPos.z = Mathf.Clamp(newPos.z, data.minBounds.z, data.maxBounds.z);
             }
 
-            transform.position = nextPos;
+            transform.position = newPos;
+
+            Vector3 currentEuler = transform.rotation.eulerAngles;
+            Vector3 targetEuler = direction.eulerAngles;
+
+            float x = Mathf.SmoothDampAngle(currentEuler.x, targetEuler.x, ref angularVelocity.x, data.smoothTime, data.maxSpeed);
+            float y = Mathf.SmoothDampAngle(currentEuler.y, targetEuler.y, ref angularVelocity.y, data.smoothTime, data.maxSpeed);
+            float z = Mathf.SmoothDampAngle(currentEuler.z, targetEuler.z, ref angularVelocity.z, data.smoothTime, data.maxSpeed);
+
+            transform.rotation = Quaternion.Euler(x, y, z);
         }
 
         private Vector3 GetTargetPos()
@@ -66,7 +89,6 @@ namespace PSEMO.Camera
                 }
 
                 endPosition /= totalWeight;
-                endPosition += data.offset;
 
                 return new Vector3 (endPosition.x, endPosition.y, endPosition.z);
             }
@@ -87,6 +109,7 @@ namespace PSEMO.Camera
         private void ResetToTarget()
         {
             velocity = Vector3.zero;
+            angularVelocity = Vector3.zero;
             transform.position = GetTargetPos();
         }
     }
