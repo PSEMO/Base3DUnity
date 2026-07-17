@@ -8,11 +8,11 @@ namespace PSEMO.Environment.Functionality
     {
         [SerializeField] string SceneToLoadName;
 
-        void OnTriggerEnter(Collider col)
+        void OnTriggerEnter(Collider _)
         {
             OnContact();
         }
-        void OnCollisionEnter(Collision col)
+        void OnCollisionEnter(Collision _)
         {
             OnContact();
         }

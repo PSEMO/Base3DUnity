@@ -6,12 +6,12 @@ namespace PSEMO.Environment.Functionality
     [RequireComponent(typeof(Collider))]
     public class EndGameOnContact : MonoBehaviour
     {
-        void OnTriggerEnter(Collider col)
+        void OnTriggerEnter(Collider _)
         {
             OnContact();
         }
 
-        void OnCollisionEnter(Collision col)
+        void OnCollisionEnter(Collision _)
         {
             OnContact();
         }
